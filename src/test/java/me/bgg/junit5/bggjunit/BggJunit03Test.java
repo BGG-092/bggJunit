@@ -4,17 +4,18 @@ import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class BggJunit03Test {
 
     @Test
-    void create(){
+    @DisplayName("테스트 네이밍 1")
+    void create_test(){
         BggJunit03 bggJunit03 = new BggJunit03();
         assertNotNull(bggJunit03);
         System.out.println("create");
     }
 
     @Test
-    @Disabled
     void create1(){
         System.out.println("create1");
     }
