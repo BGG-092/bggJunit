@@ -14,6 +14,7 @@ class BggJunit03Test {
     }
 
     @Test
+    @Disabled
     void create1(){
         System.out.println("create1");
     }
