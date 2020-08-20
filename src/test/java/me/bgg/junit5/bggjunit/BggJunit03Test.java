@@ -1,6 +1,9 @@
 package me.bgg.junit5.bggjunit;
 
+import jdk.jfr.Enabled;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 
 import java.time.Duration;
 
@@ -8,6 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayNameGeneration(DisplayNameGenerator.Standard.class)
 class BggJunit03Test {
+
+    final static String test_env = "LOCAL";
 
     @Test
     @DisplayName("테스트 네이밍 1")
@@ -25,12 +30,12 @@ class BggJunit03Test {
                         },
                         () -> "100밀리세컨 안에 끝나야한다.")
         );
-
-
     }
 
     @Test
+    @EnabledOnOs({OS.LINUX, OS.WINDOWS})
     void create1_test2(){
+        System.out.println(test_env);
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
                 () -> new BggJunit03(-1,2));
         assertEquals("a가 0보다 작으면 안된다.",exception.getMessage());
