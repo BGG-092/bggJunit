@@ -1,6 +1,5 @@
 package me.bgg.junit5.bggjunit;
 
-import jdk.jfr.Enabled;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
@@ -16,6 +15,7 @@ class BggJunit03Test {
 
     @Test
     @DisplayName("테스트 네이밍 1")
+    @DevTest2
     void create_test(){
         BggJunit03 bggJunit03 = new BggJunit03(-1);
         assertAll(
@@ -34,6 +34,7 @@ class BggJunit03Test {
 
     @Test
     @EnabledOnOs({OS.LINUX, OS.WINDOWS})
+    @DevTest
     void create1_test2(){
         System.out.println(test_env);
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
