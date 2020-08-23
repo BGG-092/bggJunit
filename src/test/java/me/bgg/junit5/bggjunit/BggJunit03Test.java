@@ -5,6 +5,10 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.EmptySource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.Duration;
@@ -55,8 +59,17 @@ class BggJunit03Test {
     @DisplayName("반복테스트2")
     @ParameterizedTest(name = "{index}, {displayName} message={0}")
     @ValueSource(strings = {"2020년","08월","23일"})
+    @NullAndEmptySource
     void parameterizedTest(String message){
         System.out.println(message);
+    }
+
+    @DisplayName("반복테스트3")
+    @ParameterizedTest(name = "{index}, {displayName} message={0}")
+    @CsvSource({"10, 문자열1", "20, 문자열2"})
+    void csvSourceTest(ArgumentsAccessor argumentsAccessor){
+        System.out.println(argumentsAccessor.getInteger(0));
+        System.out.println(argumentsAccessor.getString(1));
     }
 
     @BeforeAll
