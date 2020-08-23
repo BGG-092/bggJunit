@@ -1,8 +1,11 @@
 package me.bgg.junit5.bggjunit;
 
+import org.assertj.core.util.Strings;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.Duration;
 
@@ -40,6 +43,20 @@ class BggJunit03Test {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
                 () -> new BggJunit03(-1,2));
         assertEquals("a가 0보다 작으면 안된다.",exception.getMessage());
+    }
+
+    @RepeatedTest(value = 10, name =  "{displayName}, {currentRepetition}/{totalRepetitions}")
+    @DisplayName("반복테스트1")
+    void repeatTest(RepetitionInfo repetitionInfo){
+        System.out.println("test " + repetitionInfo.getCurrentRepetition()+ "/"
+                + repetitionInfo.getTotalRepetitions());
+    }
+
+    @DisplayName("반복테스트2")
+    @ParameterizedTest(name = "{index}, {displayName} message={0}")
+    @ValueSource(strings = {"2020년","08월","23일"})
+    void parameterizedTest(String message){
+        System.out.println(message);
     }
 
     @BeforeAll
