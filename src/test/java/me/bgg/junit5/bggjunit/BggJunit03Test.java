@@ -4,6 +4,7 @@ import org.assertj.core.util.Strings;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -19,6 +20,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class BggJunit03Test {
 
     final static String test_env = "LOCAL";
+
+    @RegisterExtension
+    static FindSlowTestExtension findSlowTestExtension = new FindSlowTestExtension(1000L);
 
     @Test
     @DisplayName("테스트 네이밍 1")
@@ -47,6 +51,12 @@ class BggJunit03Test {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
                 () -> new BggJunit03(-1,2));
         assertEquals("a가 0보다 작으면 안된다.",exception.getMessage());
+    }
+
+    @Test
+    void create1_slow_test() throws InterruptedException {
+        Thread.sleep(1005L);
+        System.out.println(this);
     }
 
     @RepeatedTest(value = 10, name =  "{displayName}, {currentRepetition}/{totalRepetitions}")
